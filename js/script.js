@@ -251,6 +251,16 @@ const Scene = {
 			}
 		}
 	},
+	getRandomColor: (event) => {
+		var letters = '0123456789ABCDEF';
+		var color = '#';
+		for (var i = 0; i < 6; i++) {
+			color += letters[Math.floor(Math.random() * 16)];
+		}
+
+		var colorValue = parseInt(color.replace("#", "0x"), 16);
+		return colorValue;
+	},
 	init: () => {
 		let vars = Scene.vars;
 
