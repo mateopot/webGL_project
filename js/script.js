@@ -16,6 +16,8 @@ const Scene = {
 		mouse: new THREE.Vector2(),
 		raycaster: new THREE.Raycaster(),
 		animSpeed: null,
+		sound: null,
+		audioLoader: null,
 		clicked: false,
 		animPercent: 0.00,
 		text: "DAWIN"
@@ -192,6 +194,14 @@ const Scene = {
 		vars.camera.aspect = window.innerWidth / window.innerHeight;
 		vars.camera.updateProjectionMatrix();
 		vars.renderer.setSize(window.innerWidth, window.innerHeight);
+	},
+	loadMusic: () => {
+		Scene.vars.audioLoader.load('sound/gradur.mp3', function (buffer) {
+			Scene.vars.sound.setBuffer(buffer);
+			Scene.vars.sound.setLoop(true);
+			Scene.vars.sound.setVolume(0.5);
+			Scene.vars.sound.play();
+		});
 	},
 	onMouseMove: (event) => {
 		Scene.vars.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
@@ -479,6 +489,15 @@ const Scene = {
 		window.addEventListener('resize', Scene.onWindowResize, false);
 		window.addEventListener('mousemove', Scene.onMouseMove, false);
 		window.addEventListener('mousedown', Scene.onMouseDown, false);
+		var listener = new THREE.AudioListener();
+		Scene.vars.camera.add(listener);
+
+		// create a global audio source
+		Scene.vars.sound = new THREE.Audio(listener);
+
+		// load a sound and set it as the Audio object's buffer
+		Scene.vars.audioLoader = new THREE.AudioLoader();
+
 
 
 		vars.stats = new Stats();
