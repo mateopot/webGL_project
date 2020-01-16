@@ -196,12 +196,16 @@ const Scene = {
 		vars.renderer.setSize(window.innerWidth, window.innerHeight);
 	},
 	loadMusic: () => {
-		Scene.vars.audioLoader.load('sound/gradur.mp3', function (buffer) {
-			Scene.vars.sound.setBuffer(buffer);
-			Scene.vars.sound.setLoop(true);
-			Scene.vars.sound.setVolume(0.5);
+		if (Scene.vars.sound.volume != 5) {
+			Scene.vars.audioLoader.load('sound/gradur.mp3', function (buffer) {
+				Scene.vars.sound.setBuffer(buffer);
+				Scene.vars.sound.setLoop(true);
+				Scene.vars.sound.setVolume(0.5);
+				Scene.vars.sound.play();
+			});
+		} else {
 			Scene.vars.sound.play();
-		});
+		}
 	},
 	onMouseMove: (event) => {
 		Scene.vars.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
